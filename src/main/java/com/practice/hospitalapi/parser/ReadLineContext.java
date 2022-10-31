@@ -24,6 +24,7 @@ public class ReadLineContext<T> {
         }
         while ((str = br.readLine()) != null) {
             result.add(parser.parse(str));
+            System.out.println(str);
         }
         return result;
     }

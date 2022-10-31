@@ -9,8 +9,9 @@ public class HospitalParser implements Parser<Hospital> {
     @Override
     public Hospital parse(String str) {
         String[] row = str.split("\",\"");
-        System.out.println(Arrays.toString(row));
-
+//        System.out.println(Arrays.toString(row));
+        Hospital hospital = null;
+        try{
         int id = Integer.parseInt(row[0].replace("\"",""));
         String service = row[1];
         int localCode = Integer.parseInt(row[3]);
@@ -27,8 +28,11 @@ public class HospitalParser implements Parser<Hospital> {
         int roomNum = Integer.parseInt(row[30]);
         int bedNum = Integer.parseInt(row[31]);
         float area = Float.parseFloat(row[32].replace("\"", ""));
-        Hospital hospital = new Hospital(id, service, localCode, manageNum, licenseDate, businessStatus, businessCode,
-                phone, address, roadAddress, name, businessType, providerNum, roomNum, bedNum, area);
+        hospital = new Hospital(id, service, localCode, manageNum, licenseDate, businessStatus, businessCode,
+                    phone, address, roadAddress, name, businessType, providerNum, roomNum, bedNum, area);
+        } catch (Exception e) {
+            System.out.println("파싱이 불가능합니다.");
+        }
         return hospital;
     }
 
