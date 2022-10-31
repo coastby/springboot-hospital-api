@@ -23,7 +23,10 @@ public class ReadLineContext<T> {
             br.readLine();
         }
         while ((str = br.readLine()) != null) {
-            result.add(parser.parse(str));
+            //파싱된 결과값이 Null이 아닌 경우에만 리스트에 추가
+            if(parser.parse(str) != null){
+                result.add(parser.parse(str));
+            }
         }
         return result;
     }

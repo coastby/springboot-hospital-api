@@ -16,11 +16,14 @@ class ReadLineContextTest {
     ReadLineContext<Hospital> hospitalReadLineContext;
     @Test
     void name() throws IOException {
-        String filename = "../data/전국병원리스트_원본 복사본.csv";
+        String filename = "../data/전국병원리스트.csv";
         List<Hospital> hospitalList = hospitalReadLineContext.readLines(filename);
 
         assertTrue(hospitalList.size() > 100000);
-        System.out.println(hospitalList.size());
+        System.out.println(hospitalList.size());        //총 개수 111919개
+        for (int i = 100000; i < 101000; i++) {
+            System.out.println(hospitalList.get(i).getId());
+        }
     }
 
 
