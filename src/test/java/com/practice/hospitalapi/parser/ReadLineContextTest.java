@@ -16,10 +16,11 @@ class ReadLineContextTest {
     ReadLineContext<Hospital> hospitalReadLineContext;
     @Test
     void name() throws IOException {
-        String filename = "../data/전국병원리스트2.csv";
+        String filename = "../data/전국병원리스트_원본 복사본.csv";
         List<Hospital> hospitalList = hospitalReadLineContext.readLines(filename);
 
         assertTrue(hospitalList.size() > 100000);
+        System.out.println(hospitalList.size());
     }
 
 

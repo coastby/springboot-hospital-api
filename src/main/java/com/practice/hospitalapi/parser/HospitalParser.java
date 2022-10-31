@@ -9,7 +9,6 @@ public class HospitalParser implements Parser<Hospital> {
     @Override
     public Hospital parse(String str) {
         String[] row = str.split("\",\"");
-//        System.out.println(Arrays.toString(row));
         Hospital hospital = null;
         try{
         int id = Integer.parseInt(row[0].replace("\"",""));
@@ -31,7 +30,7 @@ public class HospitalParser implements Parser<Hospital> {
         hospital = new Hospital(id, service, localCode, manageNum, licenseDate, businessStatus, businessCode,
                     phone, address, roadAddress, name, businessType, providerNum, roomNum, bedNum, area);
         } catch (Exception e) {
-            System.out.println("파싱이 불가능합니다.");
+            System.out.printf("파싱이 불가능합니다, 실패한 병원 : %s\n", str.substring(0, 20));
         }
         return hospital;
     }
