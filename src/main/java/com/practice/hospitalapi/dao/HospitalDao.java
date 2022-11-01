@@ -31,11 +31,15 @@ public class HospitalDao {
                 hospital.getHospitalName(), hospital.getBusinessTypeName(), hospital.getHealthcareProviderCount(), hospital.getPatientRoomCount(), hospital.getTotalNumberOfBeds(), hospital.getTotalAreaSize());
     }
 
-    public int deleteById (String id){
+    public void deleteAll(){
+        this.jdbcTemplate.update("DELETE FROM hospitals_in_korea;");
+    }
+
+    public int deleteById (int id){
         return jdbcTemplate.update("DELETE FROM hospitals_in_korea where id = ?;", id);
     }
-    public Hospital findById(String id) {
-        String sql = "SELECT * FROM Users where id = ?";
+    public Hospital findById(int id) {
+        String sql = "SELECT * FROM hospitals_in_korea where id = ?";
         RowMapper<Hospital> rowMapper = new RowMapper<Hospital>() {
             @Override
             public Hospital mapRow(ResultSet rs, int rowNum) throws SQLException {
