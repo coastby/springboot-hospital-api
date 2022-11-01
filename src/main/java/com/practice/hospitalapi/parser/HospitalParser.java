@@ -8,6 +8,9 @@ public class HospitalParser implements Parser<Hospital> {
     @Override
     public Hospital parse(String str) {
         String[] row = str.split("\",\"");
+        // 쌍따옴표 없는 파일일 경우 아래 코드로 파싱, ',' 들어있는 문자열은 쌍따옴표 없애줘야 함 .replace("\"", "")
+        // String[] row = str.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
         try{
         int id = Integer.parseInt(row[0].replace("\"",""));
         String service = row[1];
