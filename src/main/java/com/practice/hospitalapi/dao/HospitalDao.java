@@ -17,6 +17,11 @@ public class HospitalDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //RowMapper 람다로 정의하기
+    RowMapper<Hospital> rowMapper = (rs, rowNum) -> {
+        return new Hospital(rs.getInt("id"), rs.getString("open_service_name"), rs.getInt("open_local_goverment_code"), rs.getString("management_number"), rs.getTimestamp("license_date").toLocalDateTime(), rs.getInt("business_status"), rs.getInt("business_status_code"), rs.getString("phone"), rs.getString("full_address"), rs.getString("road_name_address"), rs.getString("hospital_name"), rs.getString("business_type_name"), rs.getInt("healthcare_provider_count"), rs.getInt("patient_room_count"), rs.getInt("total_number_of_beds"), rs.getFloat("total_area_size"));
+    };
+
     public void add(Hospital hospital) {
         this.jdbcTemplate.update(
                 "INSERT INTO `likelion`.`hospitals_in_korea`\n" +
@@ -44,13 +49,6 @@ public class HospitalDao {
     }
     public Hospital findById(int id) {
         String sql = "SELECT * FROM hospitals_in_korea where id = ?";
-        RowMapper<Hospital> rowMapper = new RowMapper<Hospital>() {
-            @Override
-            public Hospital mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Hospital hospital = new Hospital(rs.getInt("id"), rs.getString("open_service_name"), rs.getInt("open_local_goverment_code"), rs.getString("management_number"), rs.getTimestamp("license_date").toLocalDateTime(), rs.getInt("business_status"), rs.getInt("business_status_code"), rs.getString("phone"), rs.getString("full_address"), rs.getString("road_name_address"), rs.getString("hospital_name"), rs.getString("business_type_name"), rs.getInt("healthcare_provider_count"), rs.getInt("patient_room_count"), rs.getInt("total_number_of_beds"), rs.getFloat("total_area_size"));
-                return hospital;
-            }
-        };
         return this.jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
