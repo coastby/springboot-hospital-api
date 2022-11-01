@@ -2,7 +2,12 @@ package com.practice.hospitalapi.dao;
 
 import com.practice.hospitalapi.domain.Hospital;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 @Component
 public class HospitalDao {
@@ -25,6 +30,23 @@ public class HospitalDao {
                 hospital.getBusinessStatusCode(), hospital.getPhone(), hospital.getFullAddress(), hospital.getRoadNameAddress(),
                 hospital.getHospitalName(), hospital.getBusinessTypeName(), hospital.getHealthcareProviderCount(), hospital.getPatientRoomCount(), hospital.getTotalNumberOfBeds(), hospital.getTotalAreaSize());
     }
+
+    public int deleteById (String id){
+        return jdbcTemplate.update("DELETE FROM hospitals_in_korea where id = ?;", id);
+    }
+    public Hospital findById(String id) {
+        String sql = "SELECT * FROM Users where id = ?";
+        RowMapper<Hospital> rowMapper = new RowMapper<Hospital>() {
+            @Override
+            public Hospital mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Hospital hospital = new Hospital(rs.getInt("id"), rs.getString("open_service_name"), rs.getInt("open_local_goverment_code"), rs.getString("management_number"), rs.getTimestamp("license_date").toLocalDateTime(), rs.getInt("business_status"), rs.getInt("business_status_code"), rs.getString("phone"), rs.getString("full_address"), rs.getString("road_name_address"), rs.getString("hospital_name"), rs.getString("business_type_name"), rs.getInt("healthcare_provider_count"), rs.getInt("patient_room_count"), rs.getInt("total_number_of_beds"), rs.getFloat("total_area_size"));
+                return hospital;
+            }
+        };
+        return this.jdbcTemplate.queryForObject(sql, rowMapper, id);
+    }
+
+
 
 
 
