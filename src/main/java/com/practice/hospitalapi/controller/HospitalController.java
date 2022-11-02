@@ -31,6 +31,9 @@ public class HospitalController {
     @GetMapping(value = "/{id}")
     public String getById(@PathVariable int id){
         Hospital hospital = hospitalDao.findById(id);
+        if (hospital == null) {
+            return "찾는 아이디가 없습니다.";
+        }
         log.info("ID:"+id+"가 조회되었습니다.");
         String status = statusCode.get(hospital.getBusinessStatusCode());
         return String.format("1. 병원 이름 : %s,\n2. 주소 : %s,\n3. 도로명 주소 : %s,\n4. 의료진 수 : %d,\n" +

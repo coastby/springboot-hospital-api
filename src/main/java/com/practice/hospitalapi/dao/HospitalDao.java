@@ -1,6 +1,8 @@
 package com.practice.hospitalapi.dao;
 
 import com.practice.hospitalapi.domain.Hospital;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -49,7 +51,11 @@ public class HospitalDao {
     }
     public Hospital findById(int id) {
         String sql = "SELECT * FROM hospitals_in_korea where id = ?";
-        return this.jdbcTemplate.queryForObject(sql, rowMapper, id);
+        try {
+            return this.jdbcTemplate.queryForObject(sql, rowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 
