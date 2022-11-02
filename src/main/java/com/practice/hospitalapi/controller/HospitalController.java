@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RequestMapping("api/hospitals")
 @RestController
@@ -31,7 +32,9 @@ public class HospitalController {
     @GetMapping(value = "/{id}")
     public String getById(@PathVariable int id){
         Hospital hospital = hospitalDao.findById(id);
-        if (hospital == null) {
+        Optional<Hospital> opt = Optional.ofNullable(hospital);
+
+        if (opt.isEmpty()) {
             return "찾는 아이디가 없습니다.";
         }
         log.info("ID:"+id+"가 조회되었습니다.");
@@ -40,6 +43,11 @@ public class HospitalController {
                         "5. 병상 수 : %d,\n6. 면적 : %f,\n7. 폐업여부 : %s",
                 hospital.getHospitalName(), hospital.getFullAddress(), hospital.getRoadNameAddress(), hospital.getHealthcareProviderCount(),
                 hospital.getTotalNumberOfBeds(), hospital.getTotalAreaSize(), status);
+    }
+
+    @GetMapping(value = "/totalCount")
+    public int getTotalCount(){
+        return hospitalDao.getCount();
     }
 
 }
