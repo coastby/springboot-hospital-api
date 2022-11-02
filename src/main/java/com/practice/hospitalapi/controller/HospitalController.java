@@ -4,6 +4,8 @@ package com.practice.hospitalapi.controller;
 import com.practice.hospitalapi.dao.HospitalDao;
 import com.practice.hospitalapi.domain.Hospital;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +47,22 @@ public class HospitalController {
                 hospital.getTotalNumberOfBeds(), hospital.getTotalAreaSize(), status);
     }
 
+    @GetMapping(value = "/details/{id}")
+    public ResponseEntity<Hospital> getAllById(@PathVariable int id){
+        Hospital hospital = hospitalDao.findById(id);
+        Optional<Hospital> opt = Optional.ofNullable(hospital);
+        if(!opt.isEmpty()){
+            return ResponseEntity.ok().body(hospital);
+        } else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Hospital());
+        }
+    }
+
     @GetMapping(value = "/totalCount")
     public int getTotalCount(){
         return hospitalDao.getCount();
     }
+
+
 
 }
