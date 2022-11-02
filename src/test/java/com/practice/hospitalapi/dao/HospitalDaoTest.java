@@ -19,24 +19,25 @@ class HospitalDaoTest {
 //    void beforeMethod(){
 //        hospitalDao.deleteAll();
 //    }
+    //deleteAll 안되게 주석처리
 
-    @Test
-    void addAndFindTest(){
-        HospitalParser hp = new HospitalParser();
-        Hospital hospital = hp.parse(line1);
-        hospitalDao.add(hospital);
-
-        Hospital hospital1 = hospitalDao.findById(1);
-        assertEquals(hospital.getHospitalName(), hospital1.getHospitalName());
-        assertEquals(hospital.getLicenseDate(), hospital1.getLicenseDate());
-        assertEquals(1, hospitalDao.getCount());
-
-        hospitalDao.deleteAll();
-        assertEquals(0, hospitalDao.getCount());
-        assertThrows(EmptyResultDataAccessException.class, ()->{
-            hospitalDao.findById(1);
-        });
-    }
+//    @Test
+//    void addAndFindTest(){
+//        HospitalParser hp = new HospitalParser();
+//        Hospital hospital = hp.parse(line1);
+//        hospitalDao.add(hospital);
+//
+//        Hospital hospital1 = hospitalDao.findById(1);
+//        assertEquals(hospital.getHospitalName(), hospital1.getHospitalName());
+//        assertEquals(hospital.getLicenseDate(), hospital1.getLicenseDate());
+//        assertEquals(1, hospitalDao.getCount());
+//
+//        hospitalDao.deleteAll();
+//        assertEquals(0, hospitalDao.getCount());
+//        assertThrows(EmptyResultDataAccessException.class, ()->{
+//            hospitalDao.findById(1);
+//        });
+//    }
 
 
 
